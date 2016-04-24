@@ -32,10 +32,12 @@
                                     var script = document.createElement('script')
                                     script.src = jsurl;
                                     section.appendChild(script)
+                                    section.removeAttribute('data-js');
                                 }
                             } else {
                                 section.outerHTML = '<section data-state="alert">ERROR: The attempt to fetch ' + url + ' failed with the HTTP status ' + xhr.status + '. Check your browser\'s JavaScript console for more details.</p></section>';
                             }
+                            section.removeAttribute('data-html');
                         }
                     };
 
@@ -48,6 +50,12 @@
                     alert('Failed to get file' + url + '.' + e);
                 }
             }
+        }
+        // test if we should recurse
+        sections = document.querySelectorAll('[data-html]');
+        if (sections.length > 0) {
+            console.log("Recursive HTML slide loading");
+            querySlidingHtml();
         }
     };
 
